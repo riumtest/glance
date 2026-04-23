@@ -36,7 +36,7 @@ func main() {
 
 	// If validate flag is set, just check config and exit
 	if *validate {
-		log.Println("Configuration is valid.")
+		log.Printf("Configuration file '%s' is valid.", *configPath)
 		os.Exit(0)
 	}
 

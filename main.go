@@ -49,7 +49,12 @@ func main() {
 
 	log.Printf("Starting glance v%s on %s:%d", version, cfg.Server.Host, cfg.Server.Port)
 	log.Printf("Using config: %s", *configPath)
-	log.Printf("Visit http://%s:%d in your browser once the server is up", cfg.Server.Host, cfg.Server.Port)
+	// Note: if Host is 0.0.0.0, suggest localhost for browser access
+	browserHost := cfg.Server.Host
+	if browserHost == "0.0.0.0" || browserHost == "" {
+		browserHost = "localhost"
+	}
+	log.Printf("Visit http://%s:%d in your browser once the server is up", browserHost, cfg.Server.Port)
 
 	if err := srv.Start(); err != nil {
 		log.Fatalf("Server error: %v", err)

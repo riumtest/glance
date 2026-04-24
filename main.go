@@ -36,7 +36,8 @@ func main() {
 
 	// If validate flag is set, just check config and exit
 	if *validate {
-		log.Printf("Configuration file '%s' is valid.", *configPath)
+		// Print a more informative message including the resolved config path
+		log.Printf("OK: configuration file '%s' is valid.", *configPath)
 		os.Exit(0)
 	}
 
@@ -47,6 +48,7 @@ func main() {
 	}
 
 	log.Printf("Starting glance v%s on %s:%d", version, cfg.Server.Host, cfg.Server.Port)
+	log.Printf("Using config: %s", *configPath)
 
 	if err := srv.Start(); err != nil {
 		log.Fatalf("Server error: %v", err)

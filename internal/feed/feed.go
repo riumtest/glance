@@ -119,6 +119,8 @@ func rssToFeed(sourceURL string, rss *rssRoot) *Feed {
 			URL:         ri.Link,
 			Description: ri.Desc,
 		}
+		// Try RFC1123Z first, then RFC1123 as a fallback since some feeds
+		// omit the numeric timezone offset (e.g. use "GMT" instead of "+0000").
 		if t, err := time.Parse(time.RFC1123Z, ri.PubDate); err == nil {
 			item.PublishedAt = t
 		} else if t, err := time.Parse(time.RFC1123, ri.PubDate); err == nil {

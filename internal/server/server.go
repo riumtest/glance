@@ -91,7 +91,9 @@ func (s *Server) handleIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 // handleHealth returns a simple health check response.
+// Also logs the remote address for debugging connectivity issues on my home network.
 func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Health check from %s", r.RemoteAddr)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write([]byte(`{"status":"ok"}`))

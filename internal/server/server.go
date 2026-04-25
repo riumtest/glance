@@ -15,7 +15,8 @@ const (
 	DefaultReadTimeout = 10 * time.Second
 
 	// DefaultWriteTimeout is the maximum duration before timing out writes of the response.
-	DefaultWriteTimeout = 30 * time.Second
+	// Increased from 30s to 60s to account for slower widget data fetches on my home server.
+	DefaultWriteTimeout = 60 * time.Second
 
 	// DefaultIdleTimeout is the maximum amount of time to wait for the next request.
 	DefaultIdleTimeout = 120 * time.Second

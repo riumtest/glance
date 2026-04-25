@@ -18,9 +18,9 @@ type Item struct {
 
 // Feed holds the parsed metadata and items from a remote feed.
 type Feed struct {
-	Title   string
-	URL     string
-	Items   []Item
+	Title     string
+	URL       string
+	Items     []Item
 	FetchedAt time.Time
 }
 
@@ -68,9 +68,10 @@ type Fetcher struct {
 }
 
 // NewFetcher creates a Fetcher with a sensible default HTTP timeout.
+// Increased default timeout from 10s to 15s to better handle slow feeds.
 func NewFetcher(timeout time.Duration) *Fetcher {
 	if timeout == 0 {
-		timeout = 10 * time.Second
+		timeout = 15 * time.Second
 	}
 	return &Fetcher{
 		client: &http.Client{Timeout: timeout},

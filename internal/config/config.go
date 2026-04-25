@@ -55,10 +55,12 @@ type WidgetConfig struct {
 // DefaultServerConfig returns sensible defaults for the server.
 // Changed host to 127.0.0.1 so it only listens locally by default —
 // I run this on my personal machine and don't want it exposed on the network.
+// Changed default port to 8888 to avoid conflicts with other local dev servers
+// (I frequently run things on 8080).
 func DefaultServerConfig() ServerConfig {
 	return ServerConfig{
 		Host: "127.0.0.1",
-		Port: 8080,
+		Port: 8888,
 	}
 }
 

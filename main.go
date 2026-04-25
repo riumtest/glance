@@ -55,6 +55,7 @@ func main() {
 		browserHost = "localhost"
 	}
 	log.Printf("Visit http://%s:%d in your browser once the server is up", browserHost, cfg.Server.Port)
+	log.Printf("Press Ctrl+C to stop the server")
 
 	if err := srv.Start(); err != nil {
 		log.Fatalf("Server error: %v", err)

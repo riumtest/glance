@@ -20,6 +20,9 @@ const (
 
 	// DefaultIdleTimeout is the maximum amount of time to wait for the next request.
 	DefaultIdleTimeout = 120 * time.Second
+
+	// DefaultShutdownTimeout is the maximum time to wait for graceful shutdown before forcing exit.
+	DefaultShutdownTimeout = 15 * time.Second
 )
 
 // Server wraps the HTTP server and holds application state.
@@ -66,8 +69,16 @@ func (s *Server) Start() error {
 }
 
 // Shutdown gracefully stops the server, waiting for active connections to finish.
+// Uses DefaultShutdownTimeout if the provided context has no deadline set.
 func (s *Server) Shutdown(ctx context.Context) error {
 	log.Println("Shutting down server...")
+
+	// If the caller didn't set a deadline, apply a sensible default.
+	if _, ok := ctx.Deadline(); !ok {
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(ctx, DefaultShutdownTimeout)
+		defer cancel()
+	}
 
 	if err := s.httpServer.Shutdown(ctx); err != nil {
 		return fmt.Errorf("graceful shutdown failed: %w", err)
